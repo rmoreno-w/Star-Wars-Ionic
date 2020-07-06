@@ -1,0 +1,17 @@
+<ion-content [fullscreen]="true" padding class="background">
+ 
+  <ion-card *ngFor = "let f of lista_filmes" color="dark">
+    <ion-card-header>
+      <ion-card-title>{{f.title}}</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <p>Filme n#: {{f.episode_id}}</p>
+      <p>Diretor: {{f.director}}</p>
+      <p>Produtor: {{f.producer}}</p>
+      <p>Data de lançamento: {{f.release_date}}</p>
+      <p>Resumo (em inglês): {{f.opening_crawl}}</p>
+    <ion-button size = "small" fill = "outline" color = "light" (click)="verMais(f)">Ver Mais</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
