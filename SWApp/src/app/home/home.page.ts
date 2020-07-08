@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { LoadingController } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
 
 
 @Component({
@@ -13,16 +14,34 @@ import { LoadingController } from '@ionic/angular';
 export class HomePage {
   lista_filmes: any;
   lista_planetas: Array<string>;
-  constructor(public listaService: ApiService, private router: Router, private storage: Storage, public loadingController: LoadingController) { }
+  backButtonSubscription; 
+
+  constructor(public listaService: ApiService, private router: Router, private storage: Storage, public loadingController: LoadingController, private platform: Platform) { }
+
+
+  ngAfterViewInit() {
+    this.backButtonSubscription = this.platform.backButton.subscribeWithPriority(6000, () => {
+      if (this.constructor.name == "HomePage") {
+        if (window.confirm("Deseja sair do App?")){
+          navigator['app'].exitApp();
+        }
+      }
+      else {
+        this.router.navigate(['home']);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.backButtonSubscription.unsubscribe();
+  }
 
   ionViewWillEnter() {
     this.mostraLoading();
     this.listaService.listar_filmes().then(filmes_retorno => {
       this.lista_filmes = filmes_retorno;
 
-      setTimeout(() => {
-        this.loadingController.dismiss();
-      }, 1500);
+      this.loadingController.dismiss();
 
     }).catch((e: any) => {
       console.error('Error', e);
@@ -39,7 +58,6 @@ export class HomePage {
     this.storage.set('infosMovie', infosMovie);
 
 
-    // this.router.navigate(['ver-mais'], { queryParams: { mvInfo: infosMovie } });
     this.router.navigateByUrl('ver-mais');
 
 

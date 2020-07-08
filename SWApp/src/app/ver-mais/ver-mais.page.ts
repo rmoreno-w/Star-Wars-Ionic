@@ -17,10 +17,9 @@ export class VerMaisPage implements OnInit {
   lista_naves: Array<string> = [];
   lista_veiculos: Array<string> = [];
   lista_especies: Array<string> = [];
-  propriedade: string;
+  
 
-
-  constructor(public listaService: ApiService, private router: Router, private route: ActivatedRoute, private storage: Storage, public loadingController: LoadingController) { }
+  constructor(public listaService: ApiService, private router: Router, private route: ActivatedRoute, private storage: Storage, public loadingController: LoadingController) {  }
 
 
   ngOnInit() { }
@@ -40,16 +39,18 @@ export class VerMaisPage implements OnInit {
           this.lista_naves = this.listar_nomes(ifMovie.starships);
           this.lista_veiculos = this.listar_nomes(ifMovie.vehicles);
           this.lista_especies = this.listar_nomes(ifMovie.species);
-          this.loadingController.dismiss();
         }
       }).catch((e: any) => {
-        console.error('Error get storage movie info', e);
+        console.error('Error getting storage movie info', e);
         this.loadingController.dismiss();
       })
-    }, 500);
-
+    }, 100);
   }
 
+  ionViewDidEnter(){
+    setTimeout( () => {this.loadingController.dismiss();}, 2200);
+  }
+  
   voltar() {
     this.router.navigate(['home']);
     this.storage.remove('infosMovie');
