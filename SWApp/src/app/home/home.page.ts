@@ -23,16 +23,20 @@ export class HomePage {
     public loadingController: LoadingController,
     private platform: Platform) { }
 
-  ionViewWillEnter() {
-    this.mostraLoading();
-    this.listaService.listar_filmes().then(filmes_retorno => {
+  async ionViewWillEnter() {
+    let loading = await this.loadingController.create({
+      message: 'Aguarde.... Forças Jedi agindo sobre os dados!',
+    });
+    await loading.present();
+
+    this.listaService.listar_filmes().then(async filmes_retorno => {
       this.lista_filmes = filmes_retorno;
 
-      this.loadingController.dismiss();
+      await this.loadingController.dismiss();
 
-    }).catch((e: any) => {
+    }).catch(async (e: any) => {
       console.error('Error', e);
-      this.loadingController.dismiss();
+      await this.loadingController.dismiss();
     });
   }
 
@@ -47,11 +51,8 @@ export class HomePage {
   }
 
 
-  async mostraLoading() {
-    const loading = await this.loadingController.create({
-      message: 'Aguarde.... Forças Jedi agindo sobre os dados!',
-    });
-    await loading.present();
-  }
+  // async mostraLoading() {
+    
+  // }
 
 }

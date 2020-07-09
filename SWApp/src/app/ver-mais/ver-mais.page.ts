@@ -29,13 +29,15 @@ export class VerMaisPage implements OnInit {
 
   ngOnInit() { }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
 
-    this.mostraLoading();
-
-    setTimeout(() => {
+    //this.mostraLoading();
+    let loading = await this.loadingController.create({
+      message: 'Aguarde.... Forças Jedi agindo sobre os dados!',
+    });
+    await loading.present();
       // Acessando o storage com os valores dos filmes
-      this.storage.get('infosMovie').then((ifMovie: any) => {
+      this.storage.get('infosMovie').then(async (ifMovie: any) => {
         if (ifMovie !== null) {
           // Faz a chamada da funcao lista nomes, que recebe um array de links url, cada um contendo uma especie, planeta.. etc
           // e retorna a lista com o nome de cada elemento no array.
@@ -45,17 +47,18 @@ export class VerMaisPage implements OnInit {
           this.lista_veiculos = this.listar_nomes(ifMovie.vehicles);
           this.lista_especies = this.listar_nomes(ifMovie.species);
         }
-      }).catch((e: any) => {
+      }).catch(async  (e: any) => {
         console.error('Error getting storage movie info', e);
         this.loadingController.dismiss();
       })
-    }, 100);
   }
 
   ionViewDidEnter(){
-    setTimeout( () => {this.loadingController.dismiss();}, 2200);
+    setTimeout( () =>{
+      this.loadingController.dismiss();
+    },2200);
   }
-  
+
   voltar() {
     this.router.navigate(['home']);
     this.storage.remove('infosMovie');
@@ -78,10 +81,9 @@ export class VerMaisPage implements OnInit {
   }
 
   async mostraLoading() {
-    const loading = await this.loadingController.create({
-      message: 'Aguarde.... Forças Jedi agindo sobre os dados!',
-    });
-    await loading.present();
+
+
+    this.loadingController.dismiss();
   }
 
 
