@@ -19,7 +19,12 @@ export class VerMaisPage implements OnInit {
   lista_especies: Array<string> = [];
   
 
-  constructor(public listaService: ApiService, private router: Router, private route: ActivatedRoute, private storage: Storage, public loadingController: LoadingController) {  }
+  constructor(
+    public listaService: ApiService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private storage: Storage,
+    public loadingController: LoadingController) {  }
 
 
   ngOnInit() { }

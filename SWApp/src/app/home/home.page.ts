@@ -16,25 +16,12 @@ export class HomePage {
   lista_planetas: Array<string>;
   backButtonSubscription; 
 
-  constructor(public listaService: ApiService, private router: Router, private storage: Storage, public loadingController: LoadingController, private platform: Platform) { }
-
-
-  ngAfterViewInit() {
-    this.backButtonSubscription = this.platform.backButton.subscribeWithPriority(6000, () => {
-      if (this.constructor.name == "HomePage") {
-        if (window.confirm("Deseja sair do App?")){
-          navigator['app'].exitApp();
-        }
-      }
-      else {
-        this.router.navigate(['home']);
-      }
-    });
-  }
-
-  ngOnDestroy() {
-    this.backButtonSubscription.unsubscribe();
-  }
+  constructor(
+    public listaService: ApiService,
+    private router: Router,
+    private storage: Storage,
+    public loadingController: LoadingController,
+    private platform: Platform) { }
 
   ionViewWillEnter() {
     this.mostraLoading();
@@ -56,13 +43,10 @@ export class HomePage {
 
     // Cria o storage de sessão para salvar os dados
     this.storage.set('infosMovie', infosMovie);
-
-
     this.router.navigateByUrl('ver-mais');
-
-
-
   }
+
+
   async mostraLoading() {
     const loading = await this.loadingController.create({
       message: 'Aguarde.... Forças Jedi agindo sobre os dados!',

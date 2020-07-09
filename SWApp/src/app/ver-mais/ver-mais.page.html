@@ -4,53 +4,56 @@
     <ion-card-header>
       <ion-card-title>Personagens</ion-card-title>
     </ion-card-header>
-  
+
     <ion-card-content>
-  
+
       <p *ngFor="let p of lista_personagens"> {{p}}</p>
-  
+
     </ion-card-content>
   </ion-card>
-  
+
   <ion-card color="dark">
     <ion-card-header>
       <ion-card-title>Planetas</ion-card-title>
     </ion-card-header>
-  
+
     <ion-card-content>
       <p *ngFor="let p of lista_planetas"> {{p}}</p>
     </ion-card-content>
   </ion-card>
-  
+
   <ion-card color="dark">
     <ion-card-header>
       <ion-card-title>Naves</ion-card-title>
     </ion-card-header>
-  
+
     <ion-card-content>
       <p *ngFor="let n of lista_naves"> {{n}}</p>
     </ion-card-content>
   </ion-card>
-  
+
   <ion-card color="dark">
     <ion-card-header>
       <ion-card-title>Veículos</ion-card-title>
     </ion-card-header>
-  
+
     <ion-card-content>
       <p *ngFor="let v of lista_veiculos"> {{v}}</p>
     </ion-card-content>
   </ion-card>
-  
+
   <ion-card color="dark">
     <ion-card-header>
       <ion-card-title>Espécies</ion-card-title>
     </ion-card-header>
-  
+
     <ion-card-content>
       <p *ngFor="let e of lista_especies"> {{e}}</p>
     </ion-card-content>
   </ion-card>
-  
-  <ion-button href="home" size="small" fill="outline" color="light" (click)="voltar()">Voltar</ion-button>  
+
+  <div class="ion-text-center">
+    <ion-button size="small" fill="outline" color="light" (click)="voltar()">Voltar</ion-button>
+  </div>
+
 </ion-content>
